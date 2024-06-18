@@ -1,8 +1,16 @@
+import { createClient } from '@/supabase/clients/server'
 import Link from 'next/link'
 import { ThemeToggle } from '@/components/theme-toggle'
+import DropDown from '@/components/dropdown'
 //import { LogIn } from 'lucide-react'
 
-export default function Header() {
+export default async function Header() {
+  const supabase = createClient()
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser()
+
   return (
     <header className='border-b-2 py-4'>
       <nav className='container flex items-center justify-between'>
@@ -17,10 +25,15 @@ export default function Header() {
           </li>
         </ul>
         <div className='flex items-center gap-8'>
-          <Link href='/' className='text-primary'>
-            Login
-          </Link>
+          {!user ? (
+            <Link href='/' className='text-primary'>
+              Login
+            </Link>
+          ) : (
+            ''
+          )}
           <ThemeToggle />
+          {user ? <DropDown /> : ''}
         </div>
       </nav>
     </header>

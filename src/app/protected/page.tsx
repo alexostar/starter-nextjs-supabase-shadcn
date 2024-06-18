@@ -1,4 +1,4 @@
-import AuthMessage from './_components/AuthMessage'
+// import AuthMessage from './_components/AuthMessage'
 
 import { createClient } from '@/supabase/clients/server'
 import { redirect } from 'next/navigation'
@@ -14,9 +14,8 @@ export default async function ProtectedPage() {
   }
 
   return (
-    <div className='flex w-full flex-1 flex-col items-center'>
-      <AuthMessage />
-      <div>The content of the Protected Page</div>
+    <div className='flex justify-center pt-32 '>
+      <h1>The title of a protected page</h1>
     </div>
   )
 }
