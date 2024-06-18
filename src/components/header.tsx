@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ThemeToggle } from '@/components/theme-toggle'
-import { LogIn } from 'lucide-react'
+//import { LogIn } from 'lucide-react'
 
 export default function Header() {
   return (
@@ -17,8 +17,10 @@ export default function Header() {
           </li>
         </ul>
         <div className='flex items-center gap-8'>
+          <Link href='/' className='text-primary'>
+            Login
+          </Link>
           <ThemeToggle />
-          <LogIn className='h-8 w-8' />
         </div>
       </nav>
     </header>
