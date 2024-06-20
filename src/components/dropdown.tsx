@@ -1,8 +1,12 @@
 import { createClient } from '@/supabase/clients/server'
+
+import { UserRound } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+// import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,23 +19,24 @@ import {
 export default async function DropDown() {
   const supabase = createClient()
 
+  const {
+    data: { user }
+  } = await supabase.auth.getUser()
+
   const signOut = async () => {
     'use server'
     const supabase = createClient()
     await supabase.auth.signOut()
     return redirect('/login')
   }
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='focus:outline-none'>
-        <Avatar>
-          <AvatarImage
-            className='h-8 w-8 rounded-full'
-            src='https://avatars.githubusercontent.com/u/81553309?v=4'
-            alt='Sigfús'
-          />
-          <AvatarFallback className='text-black'>BT</AvatarFallback>
-        </Avatar>
+      <DropdownMenuTrigger asChild>
+        <Button variant='outline' size='icon'>
+          <UserRound className='h-[1.2rem] w-[1.2rem]' />
+          <span className='sr-only'>User menu</span>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>Logged in as</DropdownMenuLabel>
@@ -42,7 +47,6 @@ export default async function DropDown() {
         <DropdownMenuItem>
           <Link href='/tasks'>My tasks</Link>
         </DropdownMenuItem>
-
         <DropdownMenuItem>
           <form action={signOut}>
             <button className='rounded-md bg-orange-600 px-4 py-2 text-sm text-white no-underline hover:bg-orange-700'>
